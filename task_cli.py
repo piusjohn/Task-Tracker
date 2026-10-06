@@ -12,3 +12,4 @@ def fail(message):
     sys.exit()
 
 def now():
+    return datetime.now().isoformat(timespec="seconds")
