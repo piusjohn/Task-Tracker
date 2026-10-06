@@ -12,6 +12,7 @@ def fail(message):
     print(f"Error: {message}")
     sys.exit()
 
+
 def now():
     return datetime.now().isoformat(timespec="seconds")
 
@@ -22,6 +23,7 @@ def parse_id(text):
         fail(f"'{text}' is not a valid task ID (use a whole number).")
 
 # ---------- storage layer ----------
+
 
 def load_tasks():
     if not os.path.exists(TASKS_FILE):
@@ -40,6 +42,7 @@ def load_tasks():
         fail(f"{TASKS_FILE} should contain a list of tasks")
     return task
 
+
 def save_tasks(tasks):
     temp = TASKS_FILE + ".tmp"
     try:
@@ -48,3 +51,10 @@ def save_tasks(tasks):
         os.replace(temp, TASKS_FILE)
     except OSError as e:
         fail(f"could not write {TASKS_FILE}: {e}")
+
+
+def find_task(tasks, task_id):
+    for task in tasks:
+        if task["id"] == task_id:
+            return task
+    fail(f"no task with ID {task_id}")
