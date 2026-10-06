@@ -40,5 +40,11 @@ def load_tasks():
         fail(f"{TASKS_FILE} should contain a list of tasks")
     return task
 
-def save_tasks():
-    
+def save_tasks(tasks):
+    temp = TASKS_FILE + ".tmp"
+    try:
+        with open(temp, "r", encoding="utf-8") as f:
+             json.dump(tasks, f, indent=2)
+        os.replace(temp, TASKS_FILE)
+    except OSError as e:
+        fail(f"could not write {TASKS_FILE}: {e}")
