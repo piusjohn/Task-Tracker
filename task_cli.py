@@ -58,3 +58,9 @@ def find_task(tasks, task_id):
         if task["id"] == task_id:
             return task
     fail(f"no task with ID {task_id}")
+
+
+def next_id(tasks):
+    if not tasks:
+        return 1
+    return max(tasks["id"] for task in tasks)+1
