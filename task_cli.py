@@ -46,7 +46,7 @@ def load_tasks():
 def save_tasks(tasks):
     temp = TASKS_FILE + ".tmp"
     try:
-        with open(temp, "r", encoding="utf-8") as f:
+        with open(temp, "w", encoding="utf-8") as f:
              json.dump(tasks, f, indent=2)
         os.replace(temp, TASKS_FILE)
     except OSError as e:
@@ -71,7 +71,7 @@ def cmd_add(args):
     timestamp = now()
     tasks = load_tasks()
     task = {
-        "id": next_id[tasks],
+        "id": next_id(tasks),
         "status": "todo",
         "description": args[0].strip(),
         "updatedAt": timestamp,
@@ -93,3 +93,6 @@ def main():
     if handler is None:
         fail(f"wrong {command}. Available: " + ", ".join({COMMANDS}))
     handler(sys.argv[2:])
+
+if __name__ == "__main__":
+    main()
