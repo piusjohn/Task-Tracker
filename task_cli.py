@@ -63,7 +63,7 @@ def find_task(tasks, task_id):
 def next_id(tasks):
     if not tasks:
         return 1
-    return max(tasks["id"] for task in tasks)+1
+    return max(task["id"] for task in tasks)+1
 
 def cmd_add(args):
     if len(args) != 1 or args[0].strip() == "":
@@ -83,25 +83,53 @@ def cmd_add(args):
 
 def cmd_update(args):
     if len(args) != 2 or args[1].strip() == "":
-        fail('usage: add "description"')
+        fail('usage: update 1 "buy groceries"')
     id = parse_id(args[0].strip())
     
     timestamp = now()
     tasks = load_tasks()
+    if tasks == []:
+        fail("No task has been created yet")
     for task in tasks:
         if task["id"] == id:
             task["description"] = args[1].strip()
             task["updatedAt"] = timestamp
-
+        else:
+            fail(f"task: {id} has not yet been created")
     save_tasks(tasks)
     print(f"successfully updated task: {task['id']}")
     
 
+def cmd_delete(args):
+    if len(args) != 1 or args[0].strip() == "":
+        fail('usage: update 1 "buy groceries"')
+    id = parse_id(args[0].strip())
+    tasks = load_tasks()
+    if tasks == []:
+        fail("No task has been created yet")
+    newtask = []
+    for task in tasks:
+        if task["id"] != id:
+            newtask.append(task)
+    save_tasks(newtask)
+    print(f"successfully deleted task: {id}")
 
+def cmd_progress(args):
+    if len(args) != 1 or args[0].strip() == "":
+        fail('usage: update 1 "buy groceries"')
+    id = parse_id(args[0].strip())
+    tasks = load_tasks()
+    for task in tasks:
+        if task["id"] == id:
+            task["status"] = "in-progress"
+    save_tasks(tasks)
+    print(f"successfully marked task: {id} status as in-progress")
 
 COMMANDS = {
     "add": cmd_add,
-    "update": cmd_update
+    "update": cmd_update,
+    "delete": cmd_delete,
+    "mark-in-progress": cmd_progress
 }
 
 def main():
