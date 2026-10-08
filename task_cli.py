@@ -102,7 +102,7 @@ def cmd_update(args):
 
 def cmd_delete(args):
     if len(args) != 1 or args[0].strip() == "":
-        fail('usage: update 1 "buy groceries"')
+        fail('usage: delete 1')
     id = parse_id(args[0].strip())
     tasks = load_tasks()
     if tasks == []:
@@ -116,7 +116,7 @@ def cmd_delete(args):
 
 def cmd_progress(args):
     if len(args) != 1 or args[0].strip() == "":
-        fail('usage: update 1 "buy groceries"')
+        fail('usage: mark-in-progress 1')
     id = parse_id(args[0].strip())
     tasks = load_tasks()
     for task in tasks:
@@ -127,7 +127,7 @@ def cmd_progress(args):
 
 def cmd_done(args):
     if len(args) != 1 or args[0].strip() == "":
-        fail('usage: update 1 "buy groceries"')
+        fail('usage: done 1')
     id = parse_id(args[0].strip())
     tasks = load_tasks()
     for task in tasks:
@@ -136,12 +136,16 @@ def cmd_done(args):
     save_tasks(tasks)
     print(f"successfully marked task: {id} status as done")
 
+def cmd_list(args):
+    
+
 COMMANDS = {
     "add": cmd_add,
     "update": cmd_update,
     "delete": cmd_delete,
     "mark-in-progress": cmd_progress,
-    "done": cmd_done
+    "mark-done": cmd_done,
+    "list": cmd_list
 }
 
 def main():
