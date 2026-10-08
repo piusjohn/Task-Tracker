@@ -64,3 +64,25 @@ def next_id(tasks):
     if not tasks:
         return 1
     return max(tasks["id"] for task in tasks)+1
+
+def cmd_add(args):
+    if len(args) != 1 or args[0].strip() == "":
+        fail('usage: add "description"')
+    timestamp = now()
+    tasks = load_tasks()
+    task = {
+        "id": next_id[tasks],
+        "status": "todo",
+        "description": args[0].strip(),
+        "updatedAt": timestamp,
+        "createdAt": timestamp,
+    }
+    tasks.append(task)
+    save_tasks(tasks)
+    print(f"successfully added task: {task['id']}")
+
+COMMANDS = {
+    "add": cmd_add,
+}
+
+def main():
