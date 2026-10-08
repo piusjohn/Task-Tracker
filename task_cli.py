@@ -86,3 +86,10 @@ COMMANDS = {
 }
 
 def main():
+    if len(sys.argv) < 2:
+        fail(f"no command given, Available:" + ", ".join(COMMANDS))
+    command = sys.argv[1]
+    handler = COMMANDS.get(command)
+    if handler is None:
+        fail(f"wrong {command}. Available: " + ", ".join({COMMANDS}))
+    handler(sys.argv[2:])
