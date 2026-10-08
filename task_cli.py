@@ -69,7 +69,7 @@ def cmd_add(args):
     if len(args) != 1 or args[0].strip() == "":
         fail('usage: add "description"')
     timestamp = now()
-    tasks = load_tasks()
+    tasks = load_tasks() # returns a list of available task in the json file and stores it in "tasks" variable
     task = {
         "id": next_id(tasks),
         "status": "todo",
@@ -87,7 +87,7 @@ COMMANDS = {
 
 def main():
     if len(sys.argv) < 2:
-        fail(f"no command given, Available:" + ", ".join(COMMANDS))
+        fail(f"no command given, Available: " + ", ".join(COMMANDS))
     command = sys.argv[1]
     handler = COMMANDS.get(command)
     if handler is None:
