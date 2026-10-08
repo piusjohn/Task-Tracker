@@ -81,8 +81,27 @@ def cmd_add(args):
     save_tasks(tasks)
     print(f"successfully added task: {task['id']}")
 
+def cmd_update(args):
+    if len(args) != 2 or args[1].strip() == "":
+        fail('usage: add "description"')
+    id = parse_id(args[0].strip())
+    
+    timestamp = now()
+    tasks = load_tasks()
+    for task in tasks:
+        if task["id"] == id:
+            task["description"] = args[1].strip()
+            task["updatedAt"] = timestamp
+
+    save_tasks(tasks)
+    print(f"successfully updated task: {task['id']}")
+    
+
+
+
 COMMANDS = {
     "add": cmd_add,
+    "update": cmd_update
 }
 
 def main():
