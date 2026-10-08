@@ -137,9 +137,12 @@ def cmd_done(args):
     print(f"successfully marked task: {id} status as done")
 
 def cmd_list(args):
-    if len(args) != 0 or args[0].strip() == "":
+    if len(args) != 0:
         fail("usage: list")
-    tasks = load_tasks
+    tasks = load_tasks()
+    for task in tasks:
+        print(task["description"])
+    
 
 COMMANDS = {
     "add": cmd_add,
