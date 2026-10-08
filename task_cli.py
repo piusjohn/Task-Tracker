@@ -136,12 +136,33 @@ def cmd_done(args):
     save_tasks(tasks)
     print(f"successfully marked task: {id} status as done")
 
-def cmd_list(args):
-    if len(args) != 0:
-        fail("usage: list")
+def cmd_all_list(args):
     tasks = load_tasks()
-    for task in tasks:
-        print(task["description"])
+    if len(args) == 0:
+        for task in tasks:
+            i = 1
+        print(f"{i}: {task["description"]}")
+        i+=1
+    elif len(args) == 1:
+        cmd = args[0].strip()
+        
+        for task in tasks:
+            i = 1
+            if cmd == "done":
+                if task["status"] == "done":
+                    print(f"{i}: {task['description']}")
+                    i += 1
+            elif cmd == "in-progress":
+                if task["status"] == "in-progress":
+                    print(f"{i}: {task['description']}")
+                    i += 1
+            elif cmd == "todo":
+                if task["status"] == "todo":
+                    print(f"{i}: {task['description']}")
+                    i += 1
+    else:
+        fail("usage: List Done, List Inprogress, List Todo")
+
     
 
 COMMANDS = {
@@ -150,7 +171,7 @@ COMMANDS = {
     "delete": cmd_delete,
     "mark-in-progress": cmd_progress,
     "mark-done": cmd_done,
-    "list": cmd_list
+    "list": cmd_all_list
 }
 
 def main():
