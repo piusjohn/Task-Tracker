@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 
 TASKS_FILE = "tasks.json"
+# a set
 VALID_STATUSES = ("done", "in progress", "todo")
 
 # ---------- helpers ----------
