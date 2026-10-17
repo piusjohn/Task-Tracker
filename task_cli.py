@@ -143,7 +143,7 @@ def cmd_all_list(args):
         for task in tasks:
             i = 1
         print(f"{i}: {task["description"]}")
-        i+=1
+        i= i+1
     elif len(args) == 1:
         cmd = args[0].strip()
         
